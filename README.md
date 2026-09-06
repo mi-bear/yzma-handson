@@ -199,6 +199,8 @@ go run ./summarize -mode summary -model ~/models/SmolLM2-135M-Instruct-Q4_K_M.gg
 go test ./...
 ```
 
+同じ内容 (gofmt、`go vet`、`go test`、`modernize`) を GitHub Actions でも PR ごとに実行しています (`.github/workflows/go.yml`)。
+
 `YZMA_LIB` とモデルが揃っていれば、実際に推論を 1 回走らせる結合テストも実行できます。
 `integration` ビルドタグを付けたときだけ動き、環境が無ければスキップします。
 
