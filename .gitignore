@@ -1,0 +1,14 @@
+# ビルド成果物
+/example/summarize/summarize
+/example/menu/menu
+/example/0[1-6]-*/0[1-6]-*
+*.exe
+
+# モデルファイル ( 巨大なので含めない )
+*.gguf
+
+# OS
+.DS_Store
+
+# JetBrains IDE
+.idea/
