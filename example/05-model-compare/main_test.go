@@ -2,7 +2,7 @@ package main
 
 import (
 	"path/filepath"
-	"reflect"
+	"slices"
 	"testing"
 
 	"github.com/hybridgroup/yzma/pkg/download"
@@ -44,7 +44,7 @@ func TestResolveModelList(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got := resolveModelList(tt.in)
-			if !reflect.DeepEqual(got, tt.want) {
+			if !slices.Equal(got, tt.want) {
 				t.Errorf("resolveModelList(%q) = %#v, want %#v", tt.in, got, tt.want)
 			}
 		})
