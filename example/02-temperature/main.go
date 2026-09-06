@@ -173,7 +173,7 @@ func run(modelFile, system, userText string, temp float32, runs int) ([]string, 
 	// 6. runs 回の生成ループ。回ごとにサンプラーを作り直し、
 	//    前回の生成で溜まった KV キャッシュをクリアしてから始める。
 	results := make([]string, 0, runs)
-	for i := 0; i < runs; i++ {
+	for i := range runs {
 		text, err := generateOnce(lctx, vocab, model, tokens, temp)
 		if err != nil {
 			return nil, fmt.Errorf("%d 回目の生成に失敗: %w", i+1, err)
