@@ -7,7 +7,7 @@ Go の標準的な知識があれば読める、ローカル AI 入門ハンズ�
 - ゴール: 標準入力のテキストを「要約」または「分類」する CLI を自分で動かす。
 - 所要時間の目安: 30 分前後 (モデルのダウンロード時間を除く)。
 
-> 注意: 本教材は yzma v1.25.0 (2026-08-25 リリース) と llama.cpp b10645 の組み合わせで動作確認しています。
+> 注意: 本教材は yzma v1.30.0 (2026-10-15 リリース) と llama.cpp b11669 の組み合わせで動作確認しています。
 > 最新の正確な手順は必ず [公式リポジトリ](https://github.com/hybridgroup/yzma) と
 > [INSTALL.md](https://github.com/hybridgroup/yzma/blob/main/INSTALL.md) を確認してください。
 
@@ -34,7 +34,7 @@ Go の標準的な知識があれば読める、ローカル AI 入門ハンズ�
 
 ### 1-0. Go のバージョン
 
-yzma v1.25.0 は `go 1.26.0` 以上を要求します。手元の Go を確認してください。
+yzma v1.30.0 は `go 1.26.0` 以上を要求します。手元の Go を確認してください。
 
 ```sh
 go version   # go1.26 以上であること
@@ -43,13 +43,15 @@ go version   # go1.26 以上であること
 ### 1-1. yzma CLI
 
 ```sh
-go install github.com/hybridgroup/yzma@latest
+go install github.com/hybridgroup/yzma@v1.30.0
 ```
+
+CLI の版は `example/go.mod` の yzma と揃えます。次の節の `yzma install` は、CLI の版に合わせた `llama.cpp` を入れるからです。
 
 `yzma` コマンドが使えるか確認します (`$GOPATH/bin` か `~/go/bin` に PATH を通しておくこと)。
 
 ```sh
-yzma version
+yzma version   # yzma version 1.30.0 と表示されること
 ```
 
 ### 1-2. llama.cpp 共有ライブラリ
@@ -58,19 +60,17 @@ yzma が `llama.cpp` のプリビルドライブラリを自動ダウンロー�
 好きな置き場所を決めて実行します (例として `~/yzma/lib`)。
 
 ```sh
-yzma install --lib ~/yzma/lib --version b10645
+yzma install --lib ~/yzma/lib
 ```
 
-> **`--version b10645` を必ず付けてください。** バージョンを省略すると `llama.cpp` の最新ナイトリービルドが入りますが、
-> 2026-08-27 以降のビルドは `llama_model_params` 構造体に `lazy_mode` が追加されていて、yzma v1.25.0 とは構造体のレイアウトが合いません。
-> その状態でモデルを読み込むと、次のアサートで落ちます。
+`--version` を付けなければ、yzma のリリースごとに決められた版が入ります。yzma v1.30.0 では llama.cpp b11669 です。
+
+> **以前の版の本教材で `--version b10645` を入れた人へ:** yzma v1.30.0 は llama.cpp b11480 以降を要求するので、b10645 のままでは動きません。
+> `yzma install` は、ライブラリが既にあるディレクトリでは何もしません。`--upgrade` を付けて入れ直してください。
 >
+> ```sh
+> yzma install --lib ~/yzma/lib --upgrade
 > ```
-> src/llama-model.cpp:1735: GGML_ASSERT(!ml.no_alloc) failed
-> ```
->
-> b10645 は追加直前のビルドで、本教材はこの組み合わせで動作確認しています。
-> yzma の次のリリース (main ブランチでは対応済み) が出たら、`--version` なしでも動くようになる見込みです。
 
 完了後、環境変数 `YZMA_LIB` にそのパスを設定します。サンプルコードはここを見てライブラリを探します。
 
@@ -119,7 +119,7 @@ yzma model info -m ~/models/gemma-3-1b-it-Q4_K_M.gguf   # モデルのメタ情�
 | `example/01-translate/` 〜 `example/06-jinja-template/` | 練習問題の解答例 (4 章) |
 | `example/testdata/` | 生活の場面を題材にした入力サンプル |
 
-`go.mod` は yzma v1.25.0 を指定済みで、`go.sum` も含めています。
+`go.mod` は yzma v1.30.0 を指定済みで、`go.sum` も含めています。
 
 ```sh
 cd example
@@ -321,7 +321,7 @@ diff summarize/main.go 01-translate/main.go
 | --- | --- |
 | `環境変数 YZMA_LIB が未設定です` | `YZMA_LIB` を `yzma install --lib` の場所に設定する |
 | `ライブラリのロード失敗` | `YZMA_LIB` のパスが誤り。`ls $YZMA_LIB` に `libllama.dylib` (Linux は `.so`) があるか確認する |
-| `GGML_ASSERT(!ml.no_alloc) failed` で落ちる | `llama.cpp` が新しすぎる。`yzma install --lib ~/yzma/lib --version b10645 --upgrade` で入れ直す |
+| `ライブラリのロード失敗` に `symbol not found` が続く | `llama.cpp` が古い。`yzma install --lib ~/yzma/lib --upgrade` で入れ直す |
 | `モデル読み込み失敗` | モデルファイルが無い。`ls ~/models` で確認し、必要なら `-model` でパスを渡す |
 | `go: ... requires go >= 1.26.0` | Go が古い。1.26 以上に更新する |
 | `デコード失敗` | 入力がコンテキスト長を超えている可能性。`contextTokens` を増やすか入力を短くする |
