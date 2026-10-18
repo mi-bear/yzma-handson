@@ -145,6 +145,12 @@ go run ./summarize -mode summary < testdata/chonaikai.txt
 
 学校からの連絡 (`testdata/school-notice.txt`) でも試してみてください。持ち物や集合時間が拾えているかを見ると、要約の良し悪しが分かります。
 
+既定以外のモデルを使うときは、`-model` でモデルファイルのパスを渡します。
+
+```sh
+go run ./summarize -mode summary -model ~/models/SmolLM2-135M-Instruct-Q4_K_M.gguf < testdata/chonaikai.txt
+```
+
 ### 2-2. お店への問い合わせを分類する
 
 `testdata/inquiry-*.txt` は、家電や宅配サービスへの問い合わせ文です。人が読めば「質問」「要望」「苦情」と分かる 3 通を用意しました。
@@ -184,12 +190,6 @@ go run ./menu -people 2 -meals 3 < testdata/fridge.txt
 ```
 
 「パスタ」は冷蔵庫に無い食材なので、指示を完全には守れていません。`menu/main.go` のシステムプロンプトを直して、指示を守らせる方法を考えてみてください。
-
-別の場所に置いたモデルを使うときは `-model` でフルパスを渡します。
-
-```sh
-go run ./summarize -mode summary -model ~/models/SmolLM2-135M-Instruct-Q4_K_M.gguf < testdata/chonaikai.txt
-```
 
 ### 2-4. テストを実行する
 
