@@ -7,7 +7,7 @@ Go の標準的な知識があれば読める、ローカル AI 入門ハンズ�
 - ゴール: 標準入力のテキストを「要約」または「分類」する CLI を自分で動かす。
 - 所要時間の目安: 30 分前後 (モデルのダウンロード時間を除く)。
 
-> 注意: 本教材は yzma v1.30.0 (2026-10-15 リリース) と llama.cpp b11669 の組み合わせで動作確認しています。
+> 注意: 本教材は yzma v1.33.0 (2026-11-13 リリース) と llama.cpp b12359 の組み合わせで動作確認しています。
 > 最新の正確な手順は必ず [公式リポジトリ](https://github.com/hybridgroup/yzma) と
 > [INSTALL.md](https://github.com/hybridgroup/yzma/blob/main/INSTALL.md) を確認してください。
 
@@ -34,7 +34,7 @@ Go の標準的な知識があれば読める、ローカル AI 入門ハンズ�
 
 ### 1-0. Go のバージョン
 
-yzma v1.30.0 は `go 1.26.0` 以上を要求します。手元の Go を確認してください。
+yzma v1.33.0 は `go 1.26.0` 以上を要求します。手元の Go を確認してください。
 
 ```sh
 go version   # go1.26 以上であること
@@ -43,7 +43,7 @@ go version   # go1.26 以上であること
 ### 1-1. yzma CLI
 
 ```sh
-go install github.com/hybridgroup/yzma@v1.30.0
+go install github.com/hybridgroup/yzma@v1.33.0
 ```
 
 CLI の版は `example/go.mod` の yzma と揃えます。次の節の `yzma install` は、CLI の版に合わせた `llama.cpp` を入れるからです。
@@ -51,7 +51,7 @@ CLI の版は `example/go.mod` の yzma と揃えます。次の節の `yzma ins
 `yzma` コマンドが使えるか確認します (`$GOPATH/bin` か `~/go/bin` に PATH を通しておくこと)。
 
 ```sh
-yzma version   # yzma version 1.30.0 と表示されること
+yzma version   # yzma version 1.33.0 と表示されること
 ```
 
 ### 1-2. llama.cpp 共有ライブラリ
@@ -63,9 +63,9 @@ yzma が `llama.cpp` のプリビルドライブラリを自動ダウンロー�
 yzma install --lib ~/yzma/lib
 ```
 
-`--version` を付けなければ、yzma のリリースごとに決められた版が入ります。yzma v1.30.0 では llama.cpp b11669 です。
+`--version` を付けなければ、yzma のリリースごとに決められた版が入ります。yzma v1.33.0 では llama.cpp b12359 です。
 
-> **以前の版の本教材で `--version b10645` を入れた人へ:** yzma v1.30.0 は llama.cpp b11480 以降を要求するので、b10645 のままでは動きません。
+> **以前の版の本教材で `llama.cpp` を入れた人へ:** yzma v1.33.0 は llama.cpp b12347 以降を要求します。以前の版で入れた b10645 や b11669 は対象外です。
 > `yzma install` は、ライブラリが既にあるディレクトリでは何もしません。`--upgrade` を付けて入れ直してください。
 >
 > ```sh
@@ -119,7 +119,7 @@ yzma model info -m ~/models/gemma-3-1b-it-Q4_K_M.gguf   # モデルのメタ情�
 | `example/01-translate/` 〜 `example/06-jinja-template/` | 練習問題の解答例 (4 章) |
 | `example/testdata/` | 生活の場面を題材にした入力サンプル |
 
-`go.mod` は yzma v1.30.0 を指定済みで、`go.sum` も含めています。
+`go.mod` は yzma v1.33.0 を指定済みで、`go.sum` も含めています。
 
 ```sh
 cd example
