@@ -2,7 +2,7 @@ module github.com/mi-bear/yzma-handson/example
 
 go 1.26.0
 
-require github.com/hybridgroup/yzma v1.30.0
+require github.com/hybridgroup/yzma v1.33.0
 
 require (
 	cel.dev/expr v0.25.1 // indirect
