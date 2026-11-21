@@ -103,7 +103,8 @@ ls ~/models
 yzma model info -m ~/models/gemma-3-1b-it-Q4_K_M.gguf   # モデルのメタ情報を表示
 ```
 
-> マシンが非力なら、超軽量の `SmolLM2-135M-Instruct` (約 100MB) でも動きます。ただし要約・分類の精度は落ちます。
+> 超軽量の `SmolLM2-135M-Instruct` (約 100MB) は、`-model` でモデルを切り替える練習 (2-1 節と 4 章の練習問題 5) で使います。
+> このモデルは日本語の指示に従えず、要約や分類をさせるとシステムプロンプトを繰り返すことが多いので、gemma-3-1b-it の代わりにはなりません。
 > `yzma model get -u https://huggingface.co/bartowski/SmolLM2-135M-Instruct-GGUF/resolve/main/SmolLM2-135M-Instruct-Q4_K_M.gguf`
 
 ---
